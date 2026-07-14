@@ -140,6 +140,11 @@ runs:
           StrictHostKeyChecking no
           UserKnownHostsFile /dev/null
           IdentityFile /etc/ssh/netbsd.id_rsa
+          # Ride out brief windows where the guest can't answer ARP
+          ConnectTimeout 30
+          ConnectionAttempts 10
+          ServerAliveInterval 5
+          ServerAliveCountMax 6
         EOF
 
         sudo setfacl -m u:${USER}:rw /dev/kvm
