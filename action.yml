@@ -256,7 +256,7 @@ runs:
               fi
               break
             fi
-            ssh firecracker true
+            ssh -o ConnectTimeout=3 -o ConnectionAttempts=1 firecracker true
             if [ $? -eq 0 ]; then
               vm_started=true
               break
