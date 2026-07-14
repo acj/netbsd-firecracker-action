@@ -177,6 +177,6 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
         with:
-          run-in-vm: ping -c 1 -w 5 8.8.8.8 > /dev/null && echo ok > internet
+          run-in-vm: nc -z -w 5 8.8.8.8 53 && echo ok > internet
           verbose: true
       - run: if ! grep -q ok internet; then echo "guest should reach the internet"; exit 1; fi
