@@ -15,6 +15,7 @@ jobs:
   pre-run:
     name: Pre-run step executes
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - run: if [ -f pre-run ]; then echo "pre-run should not exist yet"; exit 1; fi
@@ -28,6 +29,7 @@ jobs:
   pre-run-non-root:
     name: Pre-run step executes as a user other than root
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -38,6 +40,7 @@ jobs:
   run-in-vm:
     name: Run-in-vm step executes
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - run: if [ -f run-in-vm ]; then echo "run-in-vm should not exist yet"; exit 1; fi
@@ -51,6 +54,7 @@ jobs:
   run-in-vm-single-quote:
     name: Run-in-vm script can contain a single quote
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -63,6 +67,7 @@ jobs:
   run-in-vm-sbin-path:
     name: Run-in-vm script can use tools from /sbin without a full path
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -74,6 +79,7 @@ jobs:
   post-run:
     name: Post-run step executes
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - run: if [ -f post-run ]; then echo "post-run should not exist yet"; exit 1; fi
@@ -86,6 +92,7 @@ jobs:
   post-run-non-root:
     name: Post-run step executes as a user other than root
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -96,6 +103,7 @@ jobs:
   vcpu-count-explicit:
     name: Explicit vcpu-count is honored inside the VM
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -108,6 +116,7 @@ jobs:
   vcpu-count-auto:
     name: Auto vcpu-count matches the runner's logical core count
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -123,6 +132,7 @@ jobs:
   resize-disk:
     name: Resize the rootfs filesystem to a given size
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -137,6 +147,7 @@ jobs:
   resize-disk-df:
     name: Resized root filesystem reports the grown size
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -149,6 +160,7 @@ jobs:
   default-disk-no-resize:
     name: Default disk-size boots without a resize reboot
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -160,6 +172,7 @@ jobs:
   exit-code-propagates:
     name: Failing run-in-vm script fails the step
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
@@ -173,6 +186,7 @@ jobs:
   internet-access:
     name: Guest has internet access through the NAT
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: ./
