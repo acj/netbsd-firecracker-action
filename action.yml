@@ -325,10 +325,14 @@ runs:
           sh -e $post_run_script
         fi
 
-        # Firecracker exits when the guest reboots; reboot(8) lives in /sbin,
-        # which is not in the non-interactive PATH.
-        ssh firecracker /sbin/reboot || true
-        tail --pid=$firecracker_pid -f /dev/null || true
+        # Firecracker exits when the guest reboots
+        ssh firecracker /sbin/reboot -q -n || true
+
+        timeout 30 tail --pid=$firecracker_pid -f /dev/null || true
+        if sudo kill -0 "$firecracker_pid" 2>/dev/null; then
+          echo "Firecracker did not exit after guest reboot; terminating it"
+          sudo kill "$firecracker_pid" 2>/dev/null || true
+        fi
 
         exit $script_exit_code
 
