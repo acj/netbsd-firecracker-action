@@ -7,7 +7,7 @@ second, and the VM is typically reachable over ssh in a few seconds.
 
 ```yaml
 - name: Launch Firecracker VM
-  uses: acj/netbsd-firecracker-action@v0.1.0
+  uses: acj/netbsd-firecracker-action@v0.1.1
   with:
     run-in-vm: |
       echo "Hello from inside the VM!"
@@ -21,7 +21,7 @@ Runs **on the host** after the VM is up. The default rsyncs the workspace
 into the VM. The `firecracker` ssh host alias is configured for you.
 
 ```yaml
-- uses: acj/netbsd-firecracker-action@v0.1.0
+- uses: acj/netbsd-firecracker-action@v0.1.1
   with:
     pre-run: |
       echo "Hello from outside the VM!"
@@ -34,7 +34,7 @@ Runs **inside the VM** as root, with `sh -e`. Its exit code becomes the
 step's exit code.
 
 ```yaml
-- uses: acj/netbsd-firecracker-action@v0.1.0
+- uses: acj/netbsd-firecracker-action@v0.1.1
   with:
     run-in-vm: |
       uname -a
