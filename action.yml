@@ -114,23 +114,33 @@ runs:
     - name: Start Firecracker VM
       shell: sudo bash -e {0}
       run: |
+        download() {
+          wget -nv \
+            --tries=3 \
+            --retry-connrefused \
+            --retry-on-host-error \
+            --retry-on-http-error=429,500,502,503,504 \
+            --waitretry=5 \
+            -O "$1" "$2"
+        }
+
         kernel_path="$(mktemp)"
-        wget -q -O "$kernel_path" ${{ inputs.kernel-url }}
+        download "$kernel_path" ${{ inputs.kernel-url }}
 
         rootfs_path="$(mktemp)"
-        wget -q -O /tmp/netbsd-rootfs.bin.xz ${{ inputs.rootfs-url }}
+        download /tmp/netbsd-rootfs.bin.xz ${{ inputs.rootfs-url }}
         xz -T 0 -d /tmp/netbsd-rootfs.bin.xz
         truncate -s ${{ inputs.disk-size }} /tmp/netbsd-rootfs.bin
         mv /tmp/netbsd-rootfs.bin "$rootfs_path"
 
         firecracker_path="$(mktemp)"
-        wget -q -O "$firecracker_path" ${{ inputs.firecracker-url }}
+        download "$firecracker_path" ${{ inputs.firecracker-url }}
         chmod +x "$firecracker_path"
 
         public_key_path="$(mktemp)"
         private_key_path="$(mktemp)"
-        wget -q -O "$public_key_path" ${{ inputs.ssh-public-key-url }}
-        wget -q -O "$private_key_path" ${{ inputs.ssh-private-key-url }}
+        download "$public_key_path" ${{ inputs.ssh-public-key-url }}
+        download "$private_key_path" ${{ inputs.ssh-private-key-url }}
         install -D -o $SUDO_USER -m 600 -T "$private_key_path" /etc/ssh/netbsd.id_rsa
 
         cat <<EOF > /etc/ssh/ssh_config.d/firecracker.conf
