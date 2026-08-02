@@ -341,5 +341,5 @@ runs:
       shell: bash -e {0}
       run: |
         echo "::group::ℹ️ Firecracker VM log (please link to this or attach the log contents when reporting a bug in this action)"
-        cat /tmp/firecracker.log
+        cat /tmp/firecracker.log 2>/dev/null || echo "(no VM log — the VM was never started)"
         echo "::endgroup::"
